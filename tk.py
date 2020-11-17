@@ -30,7 +30,7 @@ y=25
 z=26
 
 root = Tk()
-root.geometry('400x400')
+root.geometry('1000x800')
 
 
 
@@ -56,21 +56,31 @@ def fetch():
 
     print(L)
     
-    choose_caeser = ttk.Button(root, command=caeser, text='caeser')
+    choose_caeser = ttk.Button(root, command=caeser_select, text='caeser')
     choose_vernam = ttk.Button(root, command=vernam, text='virnam')
     choose_caeser.pack()
     choose_vernam.pack()
 
-def caeser():
-    
-    shift = Entry(root)
-    label1 = Label(root, text="What direction would you like to shift? Please enter 'L' for left or 'R' for right: ")
-    label1.pack()
-    shift.pack()
+def caeser_select():
 
-    chosen_shift = shift.get()
-    
+    def get_shift_number():
+        global shifty
+        shifty = shift_number.get()
+
+    def we_shift_left():
+        for i in range(length):
+            final = int(convert[i])-int(shifty)
+            final_numbers.append(final)
+        print(final_numbers)
+
+    def we_shift_right():
+        for i in range(length):
+             final = convert[i]+int(shifty)
+             final_numbers.append(final)
+        print(final_numbers)
+
     convert = []
+    final_numbers = []
     length = len(L)
     print(length)
     
@@ -78,6 +88,31 @@ def caeser():
         number = ord(L[i]) - 96
         convert.append(number)
     print(convert)
+
+    shift_number = Entry(root)
+    how_many = Label(root, text='how many positions would you like to shift by?')
+    how_many.pack()
+    shift_number.pack()
+
+    select_number = Button(root, text='select number', command=get_shift_number)
+    select_number.pack()
+
+    label = Label(root, text="What direction would you like to shift? Please enter 'L' for left or 'R' for right: ")
+    label.pack()
+
+    shift_left = Button(root, text='shift left', command=we_shift_left)
+    shift_left.pack()
+
+    shift_right = Button(root, text='shift right', command=we_shift_right)
+    shift_right.pack()
+
+
+
+
+    print(shifty)
+
+        
+
 
 def vernam():
     print('')
