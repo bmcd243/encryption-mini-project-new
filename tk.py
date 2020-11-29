@@ -1,55 +1,43 @@
 from tkinter import *
 from tkinter import ttk
+import os
+import sys
 
 root = Tk()
 root.geometry('1000x800')
 
 
-### create menu bar
 
-menu_bar = Menu(root)
-root.config(menu=menu_bar)
+def restart():
+	os.execl(sys.executable, sys.executable, *sys.argv)
 
-menu_1 = Menu(menu_bar)
-menu_bar.add_cascade(label="Pick cipher", menu=menu_1)
-menu_1.add_command(label="caeser")
-menu_1.add_command(label="vernam")
+def hide_all_frames():
+    caeser_frame.pack_forget()
+    vernam_frame.pack_forget()
 
-
-# enter phrase to be encrypted
-
-def enter():
-    global e
-    
-    enter_sentence = Label(root, text="Please enter a word/sentence: ")
-    enter_sentence.pack()
-    e = Entry(root)
-    e.pack()
-
-
-    fetcher = ttk.Button(root, command=fetch, text='fetcher')
-    fetcher.pack()
-    
-# choose cipher
-
-def fetch():
-    global L
-    
-
-    word=e.get()
-    L = list(word)
-    
-
-    print(L)
-    
-    choose_caeser = ttk.Button(root, command=caeser_select, text='caeser')
-    choose_vernam = ttk.Button(root, command=vernam, text='virnam')
-    choose_caeser.pack()
-    choose_vernam.pack()
 
 # caeser cipher
 
-def caeser_select():
+def caeser():
+    hide_all_frames()
+
+    #pack caeser frame
+    caeser_frame.pack()
+
+
+    def fetch():
+        global L
+        word=e.get()
+        print(word)
+        L = list(word)
+    
+        print(L)
+        
+        choose_caeser = ttk.Button(caeser_frame, command=caeser, text='caeser')
+        choose_caeser.pack()
+
+    fetcher = ttk.Button(caeser_frame, command=fetch, text='Encrypt')
+    fetcher.pack()
 
     # fetch shift by how many
     def get_shift_number():
@@ -82,11 +70,15 @@ def caeser_select():
                 print(final_numbers)
                 number_to_letter()
 
+
+    # enter phrase to be encrypted
+    enter_sentence = Label(caeser_frame, text="Please enter a word/sentence to be encrypted below: ")
+    enter_sentence.pack()
+    e = Entry(caeser_frame)
+    e.pack()
+
     
-    
-    # start of program
-    
-    
+    # define lists
     convert = []
     final_numbers = []
     length = len(L)
@@ -94,32 +86,31 @@ def caeser_select():
     converted_letters = []
 
     # convert letters to corresponding numbers
-    
     for i in range(length):
         number = ord(L[i]) - 96
         convert.append(number)
     print(convert)
 
     # choose how many positions to shift by
+    def shift_num_fun():
+        shift_number = Entry(caeser_frame)
+        how_many = Label(caeser_frame, text='how many positions would you like to shift by?')
+        how_many.pack()
+        shift_number.pack()
 
-    shift_number = Entry(root)
-    how_many = Label(root, text='how many positions would you like to shift by?')
-    how_many.pack()
-    shift_number.pack()
-
-    select_number = ttk.Button(root, text='select number', command=get_shift_number)
-    select_number.pack()
+        select_number = ttk.Button(caeser_frame, text='select number', command=get_shift_number)
+        select_number.pack()
 
     # choose shift direction
+    def shift_direct_num():
+        label = Label(caeser_frame, text="What direction would you like to shift? Please enter 'L' for left or 'R' for right: ")
+        label.pack()
 
-    label = Label(root, text="What direction would you like to shift? Please enter 'L' for left or 'R' for right: ")
-    label.pack()
+        shift_left = ttk.Button(caeser_frame, text='shift left', command=we_shift_left)
+        shift_left.pack()
 
-    shift_left = ttk.Button(root, text='shift left', command=we_shift_left)
-    shift_left.pack()
-
-    shift_right = ttk.Button(root, text='shift right', command=we_shift_right)
-    shift_right.pack()
+        shift_right = ttk.Button(caeser_frame, text='shift right', command=we_shift_right)
+        shift_right.pack()
 
     #################
 
@@ -144,6 +135,26 @@ def caeser_select():
 def vernam():
     print('')
 
-enter()
+
+
+### START OF PROGRAM
+
+welcome = Label(root, text="Hello, please use the menu above to navigate the interface")
+welcome.pack()
+
+### create menu bar
+
+menu_bar = Menu(root)
+root.config(menu=menu_bar)
+
+menu_1 = Menu(menu_bar)
+menu_bar.add_cascade(label="Main Menu", menu=menu_1)
+menu_1.add_command(label="Caeser Cipher", command=caeser)
+menu_1.add_command(label="Vernam Cipher", command=vernam)
+menu_1.add_command(label="Restart program", command=restart)
+
+caeser_frame = Frame(root, width=800, height=1000)
+vernam_frame = Frame(root, width=800, height=1000)
+
 
 root.mainloop()
