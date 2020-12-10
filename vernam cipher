@@ -1,0 +1,80 @@
+from tkinter import *
+from tkinter import ttk
+import os
+import sys
+
+root = Tk()
+root.geometry('1000x800')
+
+
+def vernam():
+    ### vernam cipher
+
+    hide_all_frames()
+
+    #pack vernam frame
+    vernam_frame.pack()
+
+    ### get message to encrypt
+
+    def enter_plaintext():
+        enter_sentence = Label(caeser_frame, text="Please enter a word/sentence to be encrypted below: ")
+        enter_sentence.pack()
+        e = Entry(caeser_frame)
+        e.pack()
+
+        fetch(e)
+
+    ### fetch input
+
+    def fetch(input):
+        word=input.get()
+        print(word)
+        length = len(word)
+        create_key(length)
+
+    ### create key
+
+    def create_key(L):
+        global key
+        key = []
+        import random
+        for i in range(L):
+            current = chr(random.randrange(97, 97 + 26))
+            key[i].append(current)
+        print(key)
+
+    ### START OF VERNAM
+
+    enter_plaintext()
+
+
+
+
+
+
+    # message_binary = ''.join(format(ord(i), 'b') for i in message_to_encrypt)
+    # key_binary = ''.join(format(ord(i), 'b') for i in key)
+
+    # encrypted_binary = message_binary + key_binary
+
+    # print (encrypted_binary)
+
+    # n = 8
+
+    # split_strings = []
+
+    # for i in range(0, len(encrypted_binary), n):
+    #     split_strings.append(encrypted_binary[i : i + n])
+
+
+    # print (split_strings)
+
+    # encrypted_message = []
+
+    # for i in range(len(split_strings)):
+    #     int(split_strings[i], 2)
+    #     current = chr(int(split_strings[i], 2))
+    #     encrypted_message.append(current)
+
+    # print (encrypted_message)
