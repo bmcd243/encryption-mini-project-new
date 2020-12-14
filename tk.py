@@ -239,12 +239,42 @@ def vernam():
     enter_plaintext()
 
 def explainer():
-    tab_parent = ttk.Notebook(explainer_frame)
-    symmetric = ttk.Frame(tab_parent)
-    asymmetric = ttk.Frame(tab_parent)
-    tab_parent.add(symmetric, text="Symmetric")
-    tab_parent.add(asymmetric, text="Asymmetric")
-    tab_parent.pack(expand=1, fill='both')
+    hide_all_frames()
+    explainer_frame.pack()
+
+
+    tab_parent = ttk.Notebook(explainer_frame, width=800, height=800)
+    symmetric_tab = ttk.Frame(tab_parent)
+    asymmetric_tab = ttk.Frame(tab_parent)
+    tab_parent.add(symmetric_tab, text="Symmetric")
+    tab_parent.add(asymmetric_tab, text="Asymmetric")
+    tab_parent.pack(expand=100, fill='both')
+
+    def symmetric():
+        symmetric_title = Label(symmetric_tab, text="Symmetric encryption")
+        symmetric_title.pack()
+        symmetric_title.config(font=("Courier", 44))
+
+        symmetric_tree=ttk.Treeview(symmetric_tab)
+
+        symmetric_tree["columns"]=("one")
+        symmetric_tree.column("#0", width=270, minwidth=270)
+        symmetric_tree.column("one", width=150, minwidth=150)
+
+        symmetric_tree.heading("#0",text="Pros",anchor=W)
+        symmetric_tree.heading("one", text="Cons",anchor=E)
+
+        symmetric_tree.insert(parent="", index="end", iid="#0", text="Easy to implement", values=("Hello there",))
+        
+        symmetric_tree.pack(side="top",fill="x")
+
+    def asymmetric():
+        asymmetric_title = Label(asymmetric_tab, text="Asymmetric encryption")
+        asymmetric_title.pack()
+        asymmetric_title.config(font=("Courier", 44))
+    
+    symmetric()
+    asymmetric()
 
 
 
@@ -263,8 +293,8 @@ menu_1 = Menu(menu_bar)
 menu_bar.add_cascade(label="Main Menu", menu=menu_1)
 menu_1.add_command(label="Caeser Cipher", command=caeser)
 menu_1.add_command(label="Vernam Cipher", command=vernam)
-menu_1.add_command(label="Restart Program", command=restart)
 menu_1.add_command(label="Symmetric and Asymmetric encryption", command=explainer)
+menu_1.add_command(label="Restart Program", command=restart)
 
 
 caeser_frame = Frame(root, width=800, height=1000)
