@@ -4,6 +4,7 @@ import os
 import sys
 import time
 import tkinter.font as tkFont
+from PIL import ImageTk, Image
 
 
 
@@ -18,8 +19,9 @@ def restart():
 	os.execl(sys.executable, sys.executable, *sys.argv)
 
 def hide_all_frames():
-    caeser_frame.pack_forget()
-    vernam_frame.pack_forget()
+    caeser_frame.destroy()
+    vernam_frame.destroy()
+    explainer_frame.destroy()
 
 
 
@@ -250,14 +252,26 @@ def explainer():
     explainer_frame.pack()
 
 
-    tab_parent = ttk.Notebook(explainer_frame, width=800, height=800)
+    tab_parent = ttk.Notebook(explainer_frame, width=800, height=400)
     symmetric_tab = ttk.Frame(tab_parent)
     asymmetric_tab = ttk.Frame(tab_parent)
     tab_parent.add(symmetric_tab, text="Symmetric")
     tab_parent.add(asymmetric_tab, text="Asymmetric")
-    tab_parent.pack(expand=100, fill='both')
+    tab_parent.pack(expand=150, fill='both')
 
+    
+    ### display versus image
+    def display_image():
+            image_1 = ImageTk.PhotoImage(Image.open("./images/versus.png"))
+            photo = Label(explainer_frame, image = image_1)
+            photo.image = image_1
+            photo.pack()
+
+    ### symmetric encryption function
     def symmetric():
+
+        symmetric_text = Text(symmetric_tab)
+
         symmetric_title = Label(symmetric_tab, text="Symmetric encryption")
         symmetric_title.pack()
         symmetric_title.config(font=("Courier", 44))
@@ -276,13 +290,15 @@ def explainer():
 
         
         symmetric_tree.pack(side="top",fill="x")
-
+    
+    
+    ### asymmetric encryption function
     def asymmetric():
         asymmetric_title = Label(asymmetric_tab, text="Asymmetric encryption")
         asymmetric_title.pack()
         asymmetric_title.config(font=("Courier", 44))
 
-        asymmetric_tree=ttk.Treeview(symmetric_tab)
+        asymmetric_tree=ttk.Treeview(asymmetric_tab)
 
         asymmetric_tree["columns"]=("one")
         asymmetric_tree.column("#0", width=270, minwidth=270)
@@ -293,10 +309,13 @@ def explainer():
 
         asymmetric_tree.insert(parent="", index="end", iid="#0", text="It does not force the user to share (secret) keys as symmetric encryption does, therefore removing the necessity of key distribution", values=("It is time-intensive",))
         asymmetric_tree.insert(parent="", index="end", iid="one", text="Asymmetric encryption supports digital signing which authenticates the recipient identity and make sure that message is not tampered in transit", values=("Requires considerably more effort",))
-    
+
+        asymmetric_tree.pack(side="top",fill="x")
+
+
     symmetric()
     asymmetric()
-
+    display_image()
 
 
 
