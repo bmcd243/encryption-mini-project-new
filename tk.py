@@ -7,10 +7,11 @@ import tkinter.font as tkFont
 
 
 
+
 root = Tk()
 root.geometry('1000x800')
 root.title("Encryption project")
-
+root.iconbitmap('./images/key.jpg')
 
 
 def restart():
@@ -146,6 +147,12 @@ def caeser():
 
         print ("number to letter is " + str((final_letters)))
 
+    choose_decrypt = ttk.Button(caeser_frame, text="Decrypt message", command=caeser_decrypt)
+    choose_decrypt.pack()
+
+    def caeser_decrypt():
+        print("Hello")
+
     enter()
 
 
@@ -264,7 +271,9 @@ def explainer():
         symmetric_tree.heading("#0",text="Pros",anchor=W)
         symmetric_tree.heading("one", text="Cons",anchor=E)
 
-        symmetric_tree.insert(parent="", index="end", iid="#0", text="Easy to implement", values=("Hello there",))
+        symmetric_tree.insert(parent="", index="end", iid="#0", text="Easy to set up", values=("The secret key needs to be shared with the recipient",))
+        symmetric_tree.insert(parent="", index="end", iid="one", text="All ages and backgrounds can use it", values=("If the same key is used multiple times then the hacker needs to only figure it out once and then have access to multiple items of data",))
+
         
         symmetric_tree.pack(side="top",fill="x")
 
@@ -272,6 +281,18 @@ def explainer():
         asymmetric_title = Label(asymmetric_tab, text="Asymmetric encryption")
         asymmetric_title.pack()
         asymmetric_title.config(font=("Courier", 44))
+
+        asymmetric_tree=ttk.Treeview(symmetric_tab)
+
+        asymmetric_tree["columns"]=("one")
+        asymmetric_tree.column("#0", width=270, minwidth=270)
+        asymmetric_tree.column("one", width=150, minwidth=150)
+
+        asymmetric_tree.heading("#0",text="Pros",anchor=W)
+        asymmetric_tree.heading("one", text="Cons",anchor=E)
+
+        asymmetric_tree.insert(parent="", index="end", iid="#0", text="It does not force the user to share (secret) keys as symmetric encryption does, therefore removing the necessity of key distribution", values=("It is time-intensive",))
+        asymmetric_tree.insert(parent="", index="end", iid="one", text="Asymmetric encryption supports digital signing which authenticates the recipient identity and make sure that message is not tampered in transit", values=("Requires considerably more effort",))
     
     symmetric()
     asymmetric()
