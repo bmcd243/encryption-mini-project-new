@@ -19,9 +19,9 @@ def restart():
 	os.execl(sys.executable, sys.executable, *sys.argv)
 
 def hide_all_frames():
-    caeser_frame.destroy()
-    vernam_frame.destroy()
-    explainer_frame.destroy()
+    caeser_frame.pack_forget()
+    vernam_frame.pack_forget()
+    explainer_frame.pack_forget()
 
 
 
@@ -36,7 +36,6 @@ def caeser():
     # label_one = Label(root, text = 'Hello')
     # label_one.config("Courier", 50)
     # label_one.pack()
-
     
 
     def fetch():
@@ -83,6 +82,7 @@ def caeser():
         enter_sentence.pack()
         e = Entry(caeser_frame)
         e.pack()
+    enter()
 
     
     # define lists
@@ -137,25 +137,29 @@ def caeser():
         number_to_letter = []
 
         print ("we go now")
-        print (len(final_numbers))
+        ranger = len(final_numbers)
 
-        for i in range(len(final_numbers)):
-            print(i)
+        for i in range(ranger):
             number_to_letter=chr(final_numbers[i]+96)
+            print(number_to_letter)
             final_letters.append(number_to_letter)
+            print("once")
             number_to_letter = []
             print(final_letters)
             
 
         print ("number to letter is " + str((final_letters)))
 
-    choose_decrypt = ttk.Button(caeser_frame, text="Decrypt message", command=caeser_decrypt)
-    choose_decrypt.pack()
 
     def caeser_decrypt():
         print("Hello")
 
-    enter()
+    choose_decrypt = ttk.Button(caeser_frame, text="Decrypt message", command=caeser_decrypt)
+    choose_decrypt.pack()
+
+
+
+    
 
 
 
@@ -193,6 +197,7 @@ def vernam():
     ### create key
 
     def create_key(L):
+        global K
         waiting = Label(vernam_frame, text="Creating key...")
         waiting.pack()
         import random
@@ -243,9 +248,19 @@ def vernam():
         display_vernam = Label(vernam_frame, text="You're encrypted message is: " + str(to_string))
         display_vernam.pack()
 
+        ask_decrypt_func()
+
     ### START VERNAM
     
     enter_plaintext()
+
+    def ask_decrypt_func():
+        ask_decrypt = Label(vernam_frame, text="Would you like to decrypt")
+        select_decrypt = ttk.Button(vernam_frame, text="Decrypt", command=vernam_decrypt)
+        ask_decrypt.pack()
+        select_decrypt.pack()
+
+    def vernam_decrypt():
 
 def explainer():
     hide_all_frames()
@@ -270,11 +285,21 @@ def explainer():
     ### symmetric encryption function
     def symmetric():
 
-        symmetric_text = Text(symmetric_tab)
-
         symmetric_title = Label(symmetric_tab, text="Symmetric encryption")
         symmetric_title.pack()
         symmetric_title.config(font=("Courier", 44))
+
+        symmetric_text = Text(symmetric_tab, height=10, width=50)
+        symmetric_text.insert(END, '\nWhat is symmetric encryption?\n', 'big')
+        quote = """
+        Symmetric encryption aka secret key encryption uses one single key to encrypt and decrypt data. You have to share this key with the recipient. Let’s say you want to say I love you Mom, you would write your email, then set a secret key to encrypt it. When mom receives the message she would enter the secret key to decrypt the email.
+
+
+        """
+        symmetric_text.insert(END, quote, 'color')
+        symmetric_text.pack(fill=X)
+
+
 
         symmetric_tree=ttk.Treeview(symmetric_tab)
 
@@ -297,6 +322,18 @@ def explainer():
         asymmetric_title = Label(asymmetric_tab, text="Asymmetric encryption")
         asymmetric_title.pack()
         asymmetric_title.config(font=("Courier", 44))
+
+        asymmetric_text = Text(asymmetric_tab, height=10, width=50)
+        asymmetric_text.insert(END, '\nWhat is asymmetric encryption?\n', 'big')
+        quote = """
+        The public key and the private key are not the same thing but they are related. Moreover, you create your message then encrypt it with the recipient’s public key. After that, if the recipient wants to decrypt your message he/she would have to do it with his/her private key. Keep the (private) key private at all times, the best practice would be to store it locally. One requires greater knowledge than the average person to make this happen.
+
+The emailing software of the recipient will see if the private key corresponds with the public key and then it will prompt the user to type the passphrase to decrypt the message. Some best practices for asymmetric encryption: Use 2048 bits and above keys. Finally creating strong keys is the foundation of Asymmetric encryption. A good encryption practice would be to use multiple encryption methods instead of just one. Not everyone knows how to use Asymmetric encryption so there may be occasions you have to use either Hash functions or Symmetric encryption.
+
+
+        """
+        asymmetric_text.insert(END, quote, 'color')
+        asymmetric_text.pack(fill=X)
 
         asymmetric_tree=ttk.Treeview(asymmetric_tab)
 
