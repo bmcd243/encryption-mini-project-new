@@ -43,7 +43,11 @@ def caeser():
         print(word)
         as_list = list(word)
         letter_to_number(as_list)
+
+        display_entered = Label("Phrase to convert is" + word)
+        display_entered.pack()
     
+
         
     fetcher = ttk.Button(caeser_frame, command=fetch, text='Encrypt')
     fetcher.pack()
@@ -88,7 +92,6 @@ def caeser():
     # define lists
     convert = []
     final_numbers = []
-    final_letters = []
 
     # convert letters to corresponding numbers
     
@@ -138,6 +141,7 @@ def caeser():
 
         print ("we go now")
         ranger = len(final_numbers)
+        final_letters = []
 
         for i in range(ranger):
             number_to_letter=chr(final_numbers[i]+96)
@@ -145,17 +149,25 @@ def caeser():
             final_letters.append(number_to_letter)
             print("once")
             number_to_letter = []
-            print(final_letters)
             
 
         print ("number to letter is " + str((final_letters)))
+        display_converted = Label(caeser_frame, text=str(final_letters))
+        display_converted.pack()
+        
+        ask_decrypt_caeser_func()
 
 
     def caeser_decrypt():
         print("Hello")
 
-    choose_decrypt = ttk.Button(caeser_frame, text="Decrypt message", command=caeser_decrypt)
-    choose_decrypt.pack()
+
+    def ask_decrypt_caeser_func():
+        print('sup')
+        ask_caeser_decrypt = Label(caeser_frame, text="Would you like to decrypt")
+        select_caeser_decrypt = ttk.Button(caeser_frame, text="Decrypt", command=caeser_decrypt)
+        ask_caeser_decrypt.pack()
+        select_caeser_decrypt.pack()
 
 
 
@@ -248,19 +260,20 @@ def vernam():
         display_vernam = Label(vernam_frame, text="You're encrypted message is: " + str(to_string))
         display_vernam.pack()
 
-        ask_decrypt_func()
+        ask_decrypt_vernam_func()
 
     ### START VERNAM
     
     enter_plaintext()
 
-    def ask_decrypt_func():
+    def ask_decrypt_vernam_func():
         ask_decrypt = Label(vernam_frame, text="Would you like to decrypt")
         select_decrypt = ttk.Button(vernam_frame, text="Decrypt", command=vernam_decrypt)
         ask_decrypt.pack()
         select_decrypt.pack()
 
     def vernam_decrypt():
+        print("")
 
 def explainer():
     hide_all_frames()
