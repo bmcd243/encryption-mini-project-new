@@ -63,7 +63,7 @@ def caeser():
                 print ("Out of range - can't convert")
             else:
                 print(final_numbers)
-                number_to_letter()
+        number_to_letter()
     
     # shift right chosen
     def we_shift_right():
@@ -76,7 +76,7 @@ def caeser():
                  print("Out of range")
              else:
                 print(final_numbers)
-                number_to_letter()
+        number_to_letter()
     
 
     def enter():
@@ -106,6 +106,7 @@ def caeser():
 
     # choose how many positions to shift by
     def shift_num_fun():
+        global shifty
 
     # fetch shift by how many
         def get_shift_number():
@@ -136,6 +137,8 @@ def caeser():
     #################
 
     def number_to_letter():
+        print("here")
+        global final_letters
         print (final_numbers)
         number_to_letter = []
 
@@ -149,25 +152,29 @@ def caeser():
             final_letters.append(number_to_letter)
             print("once")
             number_to_letter = []
-            
 
+        display_final_result()
+
+    def display_final_result():
         print ("number to letter is " + str((final_letters)))
         display_converted = Label(caeser_frame, text=str(final_letters))
         display_converted.pack()
+
+        print("STOP")
         
-        ask_decrypt_caeser_func()
+        # ask_decrypt_caeser_func()
 
 
     def caeser_decrypt():
         print("Hello")
 
 
-    def ask_decrypt_caeser_func():
-        print('sup')
-        ask_caeser_decrypt = Label(caeser_frame, text="Would you like to decrypt")
-        select_caeser_decrypt = ttk.Button(caeser_frame, text="Decrypt", command=caeser_decrypt)
-        ask_caeser_decrypt.pack()
-        select_caeser_decrypt.pack()
+    # def ask_decrypt_caeser_func():
+    #     print('sup')
+    #     ask_caeser_decrypt = Label(caeser_frame, text="Would you like to decrypt")
+    #     select_caeser_decrypt = ttk.Button(caeser_frame, text="Decrypt", command=caeser_decrypt)
+    #     ask_caeser_decrypt.pack()
+    #     select_caeser_decrypt.pack()
 
 
 
