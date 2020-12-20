@@ -157,7 +157,7 @@ def caeser():
         ranger = len(final_numbers)
         final_letters = []
 
-        if any(y > 0 or y < 27 for y in final_numbers):
+        if any(y > 0 for y in final_numbers):
             for i in range(ranger):
                 number_to_letter=chr(final_numbers[i]+96)
                 print(number_to_letter)
