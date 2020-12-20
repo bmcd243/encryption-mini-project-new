@@ -6,13 +6,24 @@ import time
 import tkinter.font as tkFont
 from PIL import ImageTk, Image
 
-
-
-
 root = Tk()
-root.geometry('1000x800')
+
+width = root.winfo_screenwidth()
+height = root.winfo_screenheight()
+screen_res = str(width) + 'x' + str(height)
+
+print(screen_res)
+
+if height < 1080:
+    print("Eek, your monitor isn't even 1080p")
+
+
+root.geometry(screen_res)
 root.title("Encryption project")
 root.iconbitmap('./images/key.jpg')
+
+
+
 
 
 def restart():
@@ -146,27 +157,32 @@ def caeser():
         ranger = len(final_numbers)
         final_letters = []
 
-        for i in range(ranger):
-            number_to_letter=chr(final_numbers[i]+96)
-            print(number_to_letter)
-            final_letters.append(number_to_letter)
-            print("once")
-            number_to_letter = []
+        if any(y > 0 or y < 27 for y in final_numbers):
+            for i in range(ranger):
+                number_to_letter=chr(final_numbers[i]+96)
+                print(number_to_letter)
+                final_letters.append(number_to_letter)
+                print("once")
+                number_to_letter = []
+            display_final_result()
+        else:
+            not_possible = Label(caeser_frame, text = "I am afraid that it isn't possible to encrypt that text, please restart the program to try again")
+            not_possible.pack()
 
-        display_final_result()
+        
 
     def display_final_result():
         print ("number to letter is " + str((final_letters)))
         display_converted = Label(caeser_frame, text=str(final_letters))
         display_converted.pack()
 
-        print("STOP")
+  
         
-        # ask_decrypt_caeser_func()
+    #     ask_decrypt_caeser_func()
 
 
-    def caeser_decrypt():
-        print("Hello")
+    # def caeser_decrypt():
+    #     print("Hello")
 
 
     # def ask_decrypt_caeser_func():
@@ -202,7 +218,7 @@ def vernam():
         e = Entry(vernam_frame)
         e.pack()
 
-        fetcher = ttk.Button(text = 'Encrypt', command = lambda:fetch(e))
+        fetcher = ttk.Button(text = 'Encrypt', command = lambda: fetch(e))
         fetcher.pack()
 
     ### fetch input
@@ -267,20 +283,20 @@ def vernam():
         display_vernam = Label(vernam_frame, text="You're encrypted message is: " + str(to_string))
         display_vernam.pack()
 
-        ask_decrypt_vernam_func()
+        # ask_decrypt_vernam_func()
 
     ### START VERNAM
     
     enter_plaintext()
 
-    def ask_decrypt_vernam_func():
-        ask_decrypt = Label(vernam_frame, text="Would you like to decrypt")
-        select_decrypt = ttk.Button(vernam_frame, text="Decrypt", command=vernam_decrypt)
-        ask_decrypt.pack()
-        select_decrypt.pack()
+    # def ask_decrypt_vernam_func():
+    #     ask_decrypt = Label(vernam_frame, text="Would you like to decrypt")
+    #     select_decrypt = ttk.Button(vernam_frame, text="Decrypt", command=vernam_decrypt)
+    #     ask_decrypt.pack()
+    #     select_decrypt.pack()
 
-    def vernam_decrypt():
-        print("")
+    # def vernam_decrypt():
+    #     print("")
 
 def explainer():
     hide_all_frames()
